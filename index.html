@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open the Letter</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('pink.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: "Pacifico", cursive;
+        }
+
+        .envelope {
+            position: relative;
+            width: 400px;
+            height: 250px;
+            background-color: #f4e1d2;
+            border: 2px solid #b89b84;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            overflow: hidden;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        /* Phần đỉnh của bức thư */
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: -30px;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-color: #f4e1d2;
+            border-top: 2px solid #b89b84;
+            border-left: 2px solid #b89b84;
+            border-right: 2px solid #b89b84;
+            border-radius: 50%;
+            transform-origin: bottom;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* Khi bức thư được mở */
+        .envelope.open::before {
+            transform: rotateX(180deg); /* Mở phần nắp bức thư */
+        }
+
+        .letter {
+            position: absolute;
+            width: 90%;
+            height: 70%;
+            top: 15%;
+            left: 5%;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .envelope.open .letter {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            margin-top: 20px;
+            font-size: 2em;
+            color: #7c706d;
+            text-align: center;
+        }
+
+        /* Hiệu ứng tan biến */
+        .envelope.fade-out {
+            opacity: 0;
+            transform: scale(0.8); /* Giảm kích thước khi tan biến */
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope" id="envelope">
+        <div class="letter">
+            <h2>Dear mon!<br>.</h2>
+        </div>
+    </div>
+
+    <script>
+        const envelope = document.getElementById('envelope');
+        let isOpened = false;  // Biến kiểm tra nếu thư đã mở
+        let isFaded = false;   // Biến kiểm tra nếu thư đã tan biến
+
+        envelope.addEventListener('click', function() {
+            if (!isOpened) {
+                // Nếu thư chưa mở, thực hiện mở thư
+                envelope.classList.add('open');
+                isOpened = true; // Cập nhật trạng thái đã mở
+            } else if (!isFaded) {
+                // Nếu thư đã mở, bắt đầu hiệu ứng tan biến
+                envelope.classList.add('fade-out');
+                isFaded = true;
+                setTimeout(() => {
+                    // Sau khi tan biến, chuyển hướng đến trang khác
+                    window.location.href = 'index2.html';
+                }, 1000); // Đợi 1 giây để hoàn tất hiệu ứng tan biến
+            }
+        });
+    </script>
+</body>
+</html>
